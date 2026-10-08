@@ -1,0 +1,8 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/api/craft"
+  to = "https://sumon-assistente.onrender.com/api/craft"
+  status = 200
+  force = true

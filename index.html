@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sumon Craft</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="title.css">
+</head>
+<body>
+<canvas id="c"></canvas><div id="cx"></div><div id="nm"></div><div class="hud"><div class="hotwrap"><div class="hbar" id="hbar"></div><div class="invsq" id="invSq" title="Inventário"></div></div></div>
+<div class="ov" id="st"><div class="pm"><h1 class="logo">SUMON<br>CRAFT</h1>
+<div class="menu"><button id="mResume">Continuar Jogo</button><button id="mOpts">Opções</button><button id="mQuit">Salvar e Sair</button></div></div></div>
+<div id="set" class="hidden"><h2>Configurações</h2><div class="box"><div class="stabs"><button class="act" data-p="jogo">Jogo</button><button data-p="grafico">Gráficos</button></div><div class="pane" id="jogo"></div><div class="pane hidden" id="grafico"></div></div><button class="done" id="mDone">Concluído</button></div>
+<div class="ov" id="cr"><div class="pn"><h2>Mesa de trabalho</h2><div id="cw"><div id="crg"></div><span class="ar">&rarr;</span><div id="crr"></div></div><p>Clique numa célula para pôr o bloco do espaço selecionado · botão direito limpa · clique no resultado para pegar.<br>Receitas: 1 tronco = madeira · 2x2 madeira = mesa · 8 pedregulhos em anel = fornalha.</p></div></div>
+<div id="cri"><div class="wrap">
+  <div class="tabs top" id="top"></div>
+  <div class="panel">
+    <div class="head"><h2 id="title"></h2><input id="q" placeholder="Pesquisar" autocomplete="off"></div>
+    <div class="area"><div class="grid9" id="grid"></div><div class="track"><div class="thumb" id="thumb"></div></div></div>
+    <div class="grid9 hot" id="chot"></div>
+  </div>
+  <div class="tabs bot" id="bot"></div>
+</div></div>
+<div id="tip"></div>
+<div id="ts" hidden><div class="tw">
+<header class="lg"><h1 class="logo">SUMON<br>CRAFT</h1><span id="t-splash"></span></header>
+<section class="view" id="v-main"><button class="btn" data-go="single">Um jogador</button><button class="btn" data-go="multi">Multijogador</button><button class="btn" data-act="opts">Opções…</button><button class="btn" data-act="quit">Sair</button></section>
+<section class="view" id="v-single" hidden><h2>Escolha um mundo</h2><div class="panel" id="t-worlds"></div><div class="row"><button class="btn" id="t-play" disabled>Jogar</button><button class="btn" id="t-new">Criar mundo</button></div><button class="btn" data-go="main">Voltar</button></section>
+<section class="view" id="v-create" hidden><h2>Criar novo mundo</h2><div class="panel col"><label>Nome do mundo<input type="text" id="t-name" maxlength="24" autocomplete="off"></label><label>Semente (vazio = aleatória)<input type="text" id="t-seed" maxlength="24" autocomplete="off"></label><div id="t-cfg" class="col"></div></div><div class="row"><button class="btn" id="t-do">Criar mundo</button><button class="btn" data-go="single">Cancelar</button></div></section>
+<section class="view" id="v-multi" hidden><h2>Servidores</h2><div class="panel" id="t-servers"></div><input type="text" id="t-addr" placeholder="Endereço do servidor" autocomplete="off"><div class="row"><button class="btn" id="t-ip">Conexão direta</button></div><button class="btn" data-go="main">Voltar</button></section>
+</div><div id="t-toast" hidden></div><footer><span>Sumon Craft</span><span>Projeto feito por fã</span></footer></div>
+
+<div id="ld"><div id="ldt">Carregando terreno…</div><div class="lbar"><div id="ldb"></div></div></div>
+<script>
+(()=>{const d=document.createElement('canvas');d.width=d.height=16;const x=d.getContext('2d'),bs=[[110,78,48],[96,66,40],[124,88,56],[84,58,34]];
+for(let i=0;i<16;i++)for(let j=0;j<16;j++){x.fillStyle='rgb('+bs[Math.random()*4|0]+')';x.fillRect(i,j,1,1)}
+document.documentElement.style.setProperty('--dirt','url('+d.toDataURL()+')');
+let W=null;try{W=JSON.parse(sessionStorage.getItem('sc.play'))}catch(e){}
+if(W)document.getElementById('ldt').textContent='Carregando "'+W.n+'"…';
+const S='game hud chest village menu fx fire post mob pig cow chicken villager golem loop title topbar sumon'.split(' '),b=document.getElementById('ldb');let i=0;
+const next=()=>{if(i>=S.length){b.style.width='100%';requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(()=>document.getElementById('ld').remove(),450)));return}
+b.style.width=(i/S.length*100)+'%';const s=document.createElement('script');s.src=S[i++]+'.js?v=20261008-2';s.onload=()=>setTimeout(next,30);s.onerror=next;document.body.append(s)};
+setTimeout(next,80)})();
+</script>
+</body>
+</html>
